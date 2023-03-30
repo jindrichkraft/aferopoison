@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { Pool } from 'pg';
 
 import authRouter from './routes/auth';
+import { printBanner } from './utils/banner';
 import {
   DEFAULT_EXPRESS_PORT,
   DEFAULT_POSTGRES_PORT,
@@ -32,6 +33,11 @@ export const pool = new Pool({
 
 // Routes
 app.use(AUTH_ROUTE_PATH, authRouter);
+
+// Start Banner
+printBanner('start', {
+  newLine: true,
+});
 
 // Express Server
 app.listen(expressPort, () => {

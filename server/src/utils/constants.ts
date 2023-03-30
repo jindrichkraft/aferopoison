@@ -18,3 +18,6 @@ export const UNAUTHORIZED_CODE = 401;
 export const FORBIDDEN_CODE = 403;
 export const CONFLICT_CODE = 409;
 export const SERVER_ERROR_CODE = 500;
+
+// Folders
+export const BANNER_FOLDER = 'banners';

@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { Pool } from 'pg';
 
+import { printBanner } from './utils/banner';
 import {
   DEFAULT_EXPRESS_PORT,
   DEFAULT_POSTGRES_PORT,
@@ -26,6 +27,11 @@ export const pool = new Pool({
   password: process.env.DB_PASS || '',
   database: process.env.DB_NAME || '',
   port: postgresPort,
+});
+
+// Start Banner
+printBanner('start', {
+  newLine: true,
 });
 
 // Express Server

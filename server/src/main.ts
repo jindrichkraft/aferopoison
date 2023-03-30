@@ -3,10 +3,12 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { Pool } from 'pg';
 
+import authRouter from './routes/auth';
 import {
   DEFAULT_EXPRESS_PORT,
   DEFAULT_POSTGRES_PORT,
   DEFAULT_POSTGRES_HOST,
+  AUTH_ROUTE_PATH,
 } from './utils/constants';
 
 // Setup
@@ -27,6 +29,9 @@ export const pool = new Pool({
   database: process.env.DB_NAME || '',
   port: postgresPort,
 });
+
+// Routes
+app.use(AUTH_ROUTE_PATH, authRouter);
 
 // Express Server
 app.listen(expressPort, () => {

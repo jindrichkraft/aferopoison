@@ -137,8 +137,8 @@ authRouter.post('/verify', authorize, (_, res) => {
       message: 'The token is valid!',
       data: null,
     });
-  } catch (err) {
-    console.error(err.message);
+  } catch (error) {
+    console.error(error);
     return res.status(SERVER_ERROR_CODE).json({
       success: false,
       message: 'Server error!',

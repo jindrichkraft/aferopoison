@@ -2,6 +2,7 @@ import { Routes, Route, Outlet, Navigate } from 'react-router-dom';
 
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import LogoutPage from './pages/LogoutPage';
 import { useAuth } from './hooks/auth';
 
 interface IProtectedRouteProps {
@@ -32,7 +33,7 @@ const App = (): JSX.Element => {
       <Route
         element={<ProtectedRoute condition={!!auth} fallbackPath="/login" />}
       >
-        <Route path="/logout" element={<HomePage />} />
+        <Route path="/logout" element={<LogoutPage />} />
       </Route>
     </Routes>
   );

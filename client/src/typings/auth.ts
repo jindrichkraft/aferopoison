@@ -3,8 +3,17 @@ export interface IUserAuth {
   password: string;
 }
 
+export interface IUserInfo extends IUserAuth {
+  displayName: string;
+}
+
 export interface IAuthData {
-  accessToken: string;
-  tokenType: string;
-  expiresIn: number;
+  userInfo: {
+    displayName: IUserInfo['displayName'];
+  };
+  tokenData: {
+    accessToken: string;
+    tokenType: string;
+    expiresIn: number;
+  };
 }

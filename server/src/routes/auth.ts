@@ -7,6 +7,7 @@ import {
   CREATE_NEW_USER_QUERY,
 } from '../queries/auth';
 import { generateAccessTokenData } from '../utils/jwt';
+import { authorize } from '../middlewares/auth';
 import {
   PASSWORD_SALT_ROUNDS,
   CREATED_CODE,
@@ -121,6 +122,23 @@ authRouter.post('/login', async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+    return res.status(SERVER_ERROR_CODE).json({
+      success: false,
+      message: 'Server error!',
+      data: null,
+    });
+  }
+});
+
+authRouter.post('/verify', authorize, (_, res) => {
+  try {
+    res.json({
+      success: true,
+      message: 'The token is valid!',
+      data: null,
+    });
+  } catch (err) {
+    console.error(err.message);
     return res.status(SERVER_ERROR_CODE).json({
       success: false,
       message: 'Server error!',

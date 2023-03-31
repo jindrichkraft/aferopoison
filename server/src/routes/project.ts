@@ -1,16 +1,51 @@
 import { Router } from 'express';
 
 import { pool } from '../main';
-import { GET_ALL_PROJECTS_QUERY } from '../queries/project';
+import {
+  GET_ALL_PROJECTS_QUERY,
+  GET_PROJECT_BY_ID_QUERY,
+} from '../queries/project';
 import { authorize } from '../middlewares/auth';
-import { SERVER_ERROR_CODE } from '../utils/constants';
+import { BAD_REQUEST_CODE, SERVER_ERROR_CODE } from '../utils/constants';
 
 const projectRouter = Router();
 
 projectRouter.get('/', authorize, async (_, res) => {
   try {
     const projects = await pool.query(GET_ALL_PROJECTS_QUERY);
-    return res.json(projects.rows || []);
+    return res.json({
+      success: true,
+      message: null,
+      data: projects.rows || [],
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(SERVER_ERROR_CODE).json({
+      success: false,
+      message: 'Server error!',
+      data: null,
+    });
+  }
+});
+
+projectRouter.get('/:id', authorize, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const project = await pool.query(GET_PROJECT_BY_ID_QUERY, [id]);
+
+    // Validating if project with the given ID exists
+    if (project.rowCount === 0)
+      return res.status(BAD_REQUEST_CODE).json({
+        success: false,
+        message: 'Project with this ID does not exist!',
+        data: null,
+      });
+
+    return res.json({
+      success: true,
+      message: null,
+      data: project.rows[0] || null,
+    });
   } catch (error) {
     console.log(error);
     return res.status(SERVER_ERROR_CODE).json({

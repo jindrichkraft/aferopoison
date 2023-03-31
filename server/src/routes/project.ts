@@ -5,6 +5,7 @@ import {
   GET_ALL_PROJECTS_QUERY,
   GET_PROJECT_BY_ID_QUERY,
 } from '../queries/project';
+import { GET_ALL_ISSUES_BY_PROJECT_ID_QUERY } from '../queries/issue';
 import { authorize } from '../middlewares/auth';
 import { BAD_REQUEST_CODE, SERVER_ERROR_CODE } from '../utils/constants';
 
@@ -32,6 +33,7 @@ projectRouter.get('/:id', authorize, async (req, res) => {
   try {
     const { id } = req.params;
     const project = await pool.query(GET_PROJECT_BY_ID_QUERY, [id]);
+    const issues = await pool.query(GET_ALL_ISSUES_BY_PROJECT_ID_QUERY, [id]);
 
     // Validating if project with the given ID exists
     if (project.rowCount === 0)
@@ -44,7 +46,11 @@ projectRouter.get('/:id', authorize, async (req, res) => {
     return res.json({
       success: true,
       message: null,
-      data: project.rows[0] || null,
+      data:
+        {
+          ...project.rows[0],
+          issues: issues.rows || [],
+        } || null,
     });
   } catch (error) {
     console.log(error);

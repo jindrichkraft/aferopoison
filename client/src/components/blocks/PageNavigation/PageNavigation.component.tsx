@@ -15,7 +15,10 @@ const PageNavigation = (): JSX.Element => {
         {auth ? (
           <>
             <li>
-              <Link to="/logout"> Logout</Link>
+              <Link to="/projects">Projects</Link>
+            </li>
+            <li>
+              <Link to="/logout">Logout</Link>
             </li>
           </>
         ) : (

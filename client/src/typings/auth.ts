@@ -4,6 +4,7 @@ export interface IUserAuth {
 }
 
 export interface IUserInfo extends IUserAuth {
+  user_id: number;
   displayName: string;
 }
 

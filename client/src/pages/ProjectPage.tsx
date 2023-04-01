@@ -10,7 +10,6 @@ const ProjectPage = (): JSX.Element => {
   const navigate = useNavigate();
   const { auth } = useAuth();
   const { data, loading } = useEndpoint<IProject[]>('/project', auth);
-  console.log(data);
 
   return (
     <DefaultLayout>

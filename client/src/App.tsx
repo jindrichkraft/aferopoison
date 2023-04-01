@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import ProjectPage from './pages/ProjectPage';
 import ProjectDetailPage from './pages/ProjectDetailPage';
 import IssuePage from './pages/IssuePage';
+import ProfilePage from './pages/ProfilePage';
 import LogoutPage from './pages/LogoutPage';
 import Loader from './components/elements/Loader';
 import { useAuth } from './hooks/auth';
@@ -44,6 +45,7 @@ const App = (): JSX.Element => {
         <Route path="/projects" element={<ProjectPage />} />
         <Route path="/projects/:id" element={<ProjectDetailPage />} />
         <Route path="/issue/:id" element={<IssuePage />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/logout" element={<LogoutPage />} />
       </Route>
     </Routes>

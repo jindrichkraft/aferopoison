@@ -21,7 +21,18 @@ CREATE TABLE Issues (
   description TEXT,
   time_added TIMESTAMP NOT NULL DEFAULT NOW(),
   project_id INT NOT NULL,
+  assigned_to INT NOT NULL,
+  added_by INT NOT NULL,
+  priority INT NOT NULL,
+  status INT NOT NULL DEFAULT 1,
+  archived BOOLEAN DEFAULT false,
   CONSTRAINT fk_project
     FOREIGN KEY(project_id) 
-	  REFERENCES Projects(project_id)
+	  REFERENCES Projects(project_id),
+  CONSTRAINT fk_assigned_to
+    FOREIGN KEY(assigned_to) 
+	  REFERENCES Users(user_id),
+  CONSTRAINT fk_added_by
+    FOREIGN KEY(added_by) 
+	  REFERENCES Users(user_id)
 );

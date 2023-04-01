@@ -3,6 +3,7 @@ import { Routes, Route, Outlet, Navigate } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import ProjectPage from './pages/ProjectPage';
+import ProjectDetailPage from './pages/ ProjectDetailPage';
 import LogoutPage from './pages/LogoutPage';
 import { useAuth } from './hooks/auth';
 
@@ -38,6 +39,7 @@ const App = (): JSX.Element => {
         element={<ProtectedRoute condition={!!auth} fallbackPath="/login" />}
       >
         <Route path="/projects" element={<ProjectPage />} />
+        <Route path="/projects/:id" element={<ProjectDetailPage />} />
         <Route path="/logout" element={<LogoutPage />} />
       </Route>
     </Routes>

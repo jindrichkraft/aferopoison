@@ -15,6 +15,14 @@ CREATE TABLE Projects (
   description TEXT
 );
 
+CREATE TABLE UserProjects (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES Users(user_id),
+  project_id INTEGER REFERENCES Projects(project_id),
+  role INT NOT NULL DEFAULT 1,
+  time_added TIMESTAMP DEFAULT NOW()
+);
+
 CREATE TABLE Issues (
   issue_id SERIAL PRIMARY KEY,
   title VARCHAR(72) NOT NULL,

@@ -6,6 +6,7 @@ export const DEFAULT_POSTGRES_HOST = 'localhost';
 // Routes
 export const AUTH_ROUTE_PATH = '/auth';
 export const PROJECTS_ROUTE_PATH = '/project';
+export const ISSUES_ROUTE_PATH = '/issue';
 
 // Auth
 export const PASSWORD_SALT_ROUNDS = 10;

@@ -5,6 +5,7 @@ import { Pool } from 'pg';
 
 import authRouter from './routes/auth';
 import projectRouter from './routes/project';
+import issueRouter from './routes/issue';
 import { printBanner } from './utils/banner';
 import {
   DEFAULT_EXPRESS_PORT,
@@ -12,6 +13,7 @@ import {
   DEFAULT_POSTGRES_HOST,
   AUTH_ROUTE_PATH,
   PROJECTS_ROUTE_PATH,
+  ISSUES_ROUTE_PATH,
 } from './utils/constants';
 
 // Setup
@@ -36,6 +38,7 @@ export const pool = new Pool({
 // Routes
 app.use(AUTH_ROUTE_PATH, authRouter);
 app.use(PROJECTS_ROUTE_PATH, projectRouter);
+app.use(ISSUES_ROUTE_PATH, issueRouter);
 
 // Start Banner
 printBanner('start', {

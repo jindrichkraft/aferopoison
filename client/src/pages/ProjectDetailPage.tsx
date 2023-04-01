@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 
 import DefaultLayout from '../layouts/DefaultLayout';
+import Loader from '../components/elements/Loader';
 import { useAuth } from '../hooks/auth';
 import { useEndpoint } from '../hooks/api';
 import {
@@ -21,7 +22,7 @@ const ProjectDetailPage = (): JSX.Element => {
 
   return (
     <DefaultLayout>
-      {loading ? <p>Loading...</p> : null}
+      {loading ? <Loader /> : null}
       {data ? (
         <>
           <h1>{data.name}</h1>

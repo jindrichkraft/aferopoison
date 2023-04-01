@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 import DefaultLayout from '../layouts/DefaultLayout';
+import Loader from '../components/elements/Loader';
 import { useAuth } from '../hooks/auth';
 import { useEndpoint } from '../hooks/api';
 
@@ -14,7 +15,7 @@ const ProjectPage = (): JSX.Element => {
   return (
     <DefaultLayout>
       <h1>Projects</h1>
-      {loading ? <p>Loading...</p> : null}
+      {loading ? <Loader /> : null}
       {data
         ? data.map((project) => (
             <div key={project.project_id}>

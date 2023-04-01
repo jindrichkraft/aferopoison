@@ -6,10 +6,12 @@ import ProjectPage from './pages/ProjectPage';
 import ProjectDetailPage from './pages/ProjectDetailPage';
 import IssuePage from './pages/IssuePage';
 import LogoutPage from './pages/LogoutPage';
+import Loader from './components/elements/Loader';
 import { useAuth } from './hooks/auth';
 
 import './styles/reset.scss';
 import './styles/main.scss';
+import './styles/animations.scss';
 
 interface IProtectedRouteProps {
   condition: boolean;
@@ -27,7 +29,7 @@ const App = (): JSX.Element => {
   const { auth } = useAuth();
 
   if (typeof auth === 'undefined') {
-    return <p>Loading...</p>;
+    return <Loader />;
   }
 
   return (

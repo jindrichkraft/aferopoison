@@ -10,6 +10,7 @@ export interface IUserInfo extends IUserAuth {
 
 export interface IAuthData {
   userInfo: {
+    username: IUserInfo['username'];
     displayName: IUserInfo['displayName'];
   };
   tokenData: {

@@ -1,10 +1,10 @@
 export interface IUserAuth {
-  user_id: number;
   username: string;
   password: string;
 }
 
 export interface IUserInfo extends IUserAuth {
+  user_id: number;
   displayName: string;
 }
 

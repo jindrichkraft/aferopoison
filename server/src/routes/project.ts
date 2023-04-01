@@ -11,9 +11,9 @@ import { BAD_REQUEST_CODE, SERVER_ERROR_CODE } from '../utils/constants';
 
 const projectRouter = Router();
 
-projectRouter.get('/', authorize, async (_, res) => {
+projectRouter.get('/', authorize, async (req, res) => {
   try {
-    const projects = await pool.query(GET_ALL_PROJECTS_QUERY);
+    const projects = await pool.query(GET_ALL_PROJECTS_QUERY, [req.user.id]);
     return res.json({
       success: true,
       message: null,
@@ -32,7 +32,10 @@ projectRouter.get('/', authorize, async (_, res) => {
 projectRouter.get('/:id', authorize, async (req, res) => {
   try {
     const { id } = req.params;
-    const project = await pool.query(GET_PROJECT_BY_ID_QUERY, [id]);
+    const project = await pool.query(GET_PROJECT_BY_ID_QUERY, [
+      req.user.id,
+      id,
+    ]);
     const issues = await pool.query(GET_ALL_ISSUES_BY_PROJECT_ID_QUERY, [id]);
 
     // Validating if project with the given ID exists

@@ -25,33 +25,37 @@ const ProjectDetailPage = (): JSX.Element => {
       {data ? (
         <>
           <h2>Details</h2>
+          <p>Name: {data.name}</p>
           <p>{data.description}</p>
           <h2>Issues</h2>
           {data.issues ? (
-            <table border={1}>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Title</th>
-                  <th>Added by</th>
-                  <th>Assigned to</th>
-                  <th>Priority</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.issues.map((issue) => (
-                  <tr key={issue.issue_id}>
-                    <td>#{issue.issue_id}</td>
-                    <td>{issue.title}</td>
-                    <td>{issue.added_by_name}</td>
-                    <td>{issue.assigned_to_name}</td>
-                    <td>{lookupIssuePriorityLabel(issue.status)}</td>
-                    <td>{lookupIssueStatusLabel(issue.status)}</td>
+            <>
+              <button>Add an issue</button>
+              <table border={1}>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Added by</th>
+                    <th>Assigned to</th>
+                    <th>Priority</th>
+                    <th>Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {data.issues.map((issue) => (
+                    <tr key={issue.issue_id}>
+                      <td>#{issue.issue_id}</td>
+                      <td>{issue.title}</td>
+                      <td>{issue.added_by_name}</td>
+                      <td>{issue.assigned_to_name}</td>
+                      <td>{lookupIssuePriorityLabel(issue.priority)}</td>
+                      <td>{lookupIssueStatusLabel(issue.status)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
           ) : null}
         </>
       ) : null}

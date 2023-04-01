@@ -1,4 +1,4 @@
-export type APIEndpoint = '/project' | `/project/${number}`;
+export type APIEndpoint = '/project' | `/project/${number}` | '/issue';
 
 export interface IAPIResponse {
   success: boolean;

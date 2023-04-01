@@ -14,4 +14,5 @@ export interface IIssue {
   archived: boolean;
   added_by_name: IUserInfo['displayName'];
   assigned_to_name: IUserInfo['displayName'];
+  project_name?: IProject['name'];
 }

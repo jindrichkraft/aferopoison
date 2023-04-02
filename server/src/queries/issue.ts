@@ -24,7 +24,18 @@ export const GET_ALL_ISSUES_BY_PROJECT_ID_QUERY =
   'WHERE Issues.project_id = $1';
 export const CREATE_NEW_ISSUE_QUERY =
   'INSERT INTO Issues (title, description, project_id, assigned_to, added_by, priority, status) ' +
-  'VALUES ($1, $2, $3, $4, $5, $6, 1) ' +
+  'SELECT $2, $3, $4, $5, $6, $7, 1 ' +
+  'WHERE EXISTS ( ' +
+  '  SELECT 1' +
+  '  FROM UserProjects ' +
+  '  WHERE user_id = $1 AND project_id = $4' +
+  ') ' +
   'RETURNING *';
 export const DELETE_ISSUE_BY_ID_QUERY =
-  'DELETE FROM Issues WHERE issue_id = $1 RETURNING *';
+  'DELETE FROM Issues ' +
+  'WHERE project_id IN ( ' +
+  '  SELECT project_id ' +
+  '  FROM UserProjects ' +
+  '  WHERE user_id = $1 ' +
+  ') AND issue_id = $2 ' +
+  'RETURNING *';

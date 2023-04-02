@@ -77,23 +77,30 @@ issueRouter.post('/', authorize, async (req, res) => {
       });
 
     // Creating the new issue
-    const newIssue = (
-      await pool.query(CREATE_NEW_ISSUE_QUERY, [
-        title,
-        description,
-        projectId,
-        assignedTo,
-        req.user.id,
-        priority,
-      ])
-    ).rows[0];
+    const newIssue = await pool.query(CREATE_NEW_ISSUE_QUERY, [
+      req.user.id,
+      title,
+      description,
+      projectId,
+      assignedTo,
+      req.user.id,
+      priority,
+    ]);
+
+    // Validating if project with the given ID exists
+    if (newIssue.rowCount === 0)
+      return res.status(BAD_REQUEST_CODE).json({
+        success: false,
+        message: 'Project with this ID does not exist!',
+        data: null,
+      });
 
     // Sending the issue data
     return res.status(CREATED_CODE).json({
       success: true,
       message: 'Successfully created a new issue!',
       data: {
-        ...newIssue,
+        ...newIssue.rows[0],
       },
     });
   } catch (error) {
@@ -109,7 +116,10 @@ issueRouter.post('/', authorize, async (req, res) => {
 issueRouter.delete('/:id', authorize, async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedIssue = await pool.query(DELETE_ISSUE_BY_ID_QUERY, [id]);
+    const deletedIssue = await pool.query(DELETE_ISSUE_BY_ID_QUERY, [
+      req.user.id,
+      id,
+    ]);
 
     // Validating if issue with the given ID exists
     if (deletedIssue.rowCount === 0)

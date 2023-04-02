@@ -26,3 +26,5 @@ export const CREATE_NEW_ISSUE_QUERY =
   'INSERT INTO Issues (title, description, project_id, assigned_to, added_by, priority, status) ' +
   'VALUES ($1, $2, $3, $4, $5, $6, 1) ' +
   'RETURNING *';
+export const DELETE_ISSUE_BY_ID_QUERY =
+  'DELETE FROM Issues WHERE issue_id = $1 RETURNING *';

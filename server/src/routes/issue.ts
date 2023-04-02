@@ -5,6 +5,7 @@ import {
   GET_ISSUE_BY_ID_QUERY,
   GET_ALL_ISSUES_ASSIGNED_TO_USER_QUERY,
   CREATE_NEW_ISSUE_QUERY,
+  UPDATE_ISSUE_BY_ID_QUERY,
   DELETE_ISSUE_BY_ID_QUERY,
 } from '../queries/issue';
 import { authorize } from '../middlewares/auth';
@@ -102,6 +103,52 @@ issueRouter.post('/', authorize, async (req, res) => {
       data: {
         ...newIssue.rows[0],
       },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(SERVER_ERROR_CODE).json({
+      success: false,
+      message: 'Server error!',
+      data: null,
+    });
+  }
+});
+
+issueRouter.put('/:id', authorize, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Validating input data
+    const { title, description, assignedTo, priority, status } = req.body;
+    if (!title || !description || !assignedTo || !priority || !status)
+      return res.status(BAD_REQUEST_CODE).json({
+        success: false,
+        message: 'Invalid input data!',
+        data: null,
+      });
+
+    const updatedIssue = await pool.query(UPDATE_ISSUE_BY_ID_QUERY, [
+      req.user.id,
+      id,
+      title,
+      description,
+      assignedTo,
+      priority,
+      status,
+    ]);
+
+    // Validating if issue with the given ID exists
+    if (updatedIssue.rowCount === 0)
+      return res.status(BAD_REQUEST_CODE).json({
+        success: false,
+        message: 'Issue with this ID does not exist!',
+        data: null,
+      });
+
+    return res.json({
+      success: true,
+      message: null,
+      data: updatedIssue.rows[0] || null,
     });
   } catch (error) {
     console.log(error);

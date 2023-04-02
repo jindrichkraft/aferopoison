@@ -6,7 +6,10 @@ import type { IAuthData } from '../typings/auth';
 
 export const useEndpoint = <T>(
   endpoint: APIEndpoint,
-  authData?: IAuthData | null | undefined
+  authData?: IAuthData | null | undefined,
+  options?: {
+    autoFetch?: boolean;
+  }
 ) => {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -27,7 +30,7 @@ export const useEndpoint = <T>(
   };
 
   useEffect(() => {
-    fetchData();
+    if (!options?.autoFetch || (options && options.autoFetch)) fetchData();
   }, [authData]);
 
   return {

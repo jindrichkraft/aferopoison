@@ -20,7 +20,7 @@ const PageNavigation = (): JSX.Element => {
               <Link to="/projects">Projects</Link>
             </li>
             <li className="nav-item">
-              <Link to="/profile">
+              <Link to={`/profile/${auth.userInfo.username}`}>
                 <div className="profile-info">
                   <div className="profile-picture">
                     <img

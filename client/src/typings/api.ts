@@ -2,7 +2,8 @@ export type APIEndpoint =
   | '/project'
   | `/project/${number}`
   | '/issue'
-  | `/issue/${number}`;
+  | `/issue/${number}`
+  | `/profile/${string}`;
 
 export interface IAPIResponse {
   success: boolean;

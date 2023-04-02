@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 
 import DefaultLayout from '../layouts/DefaultLayout';
+import Loader from '../components/elements/Loader';
 import { useAuth } from '../hooks/auth';
 import { useEndpoint } from '../hooks/api';
 import {
@@ -19,7 +20,7 @@ const HomePage = (): JSX.Element => {
     <DefaultLayout>
       <h1>Home</h1>
       <h2>My Issues</h2>
-      {loading ? <p>Loading...</p> : null}
+      {loading ? <Loader /> : null}
       {data ? (
         <table border={1}>
           <thead>

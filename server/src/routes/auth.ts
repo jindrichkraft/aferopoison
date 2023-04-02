@@ -60,6 +60,7 @@ authRouter.post('/register', async (req, res) => {
       message: 'Successfully created a new user!',
       data: {
         userInfo: {
+          username: newUser.username,
           displayName: newUser.display_name,
         },
         tokenData: generateAccessTokenData(newUser.user_id),
@@ -115,6 +116,7 @@ authRouter.post('/login', async (req, res) => {
       message: 'Successfully logged in!',
       data: {
         userInfo: {
+          username: existingUser.rows[0].username,
           displayName: existingUser.rows[0].display_name,
         },
         tokenData: generateAccessTokenData(existingUser.rows[0].user_id),

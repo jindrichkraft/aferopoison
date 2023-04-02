@@ -22,3 +22,7 @@ export const GET_ALL_ISSUES_BY_PROJECT_ID_QUERY =
   'JOIN Users u1 ON Issues.added_by = u1.user_id ' +
   'JOIN Users u2 ON Issues.assigned_to = u2.user_id ' +
   'WHERE Issues.project_id = $1';
+export const CREATE_NEW_ISSUE_QUERY =
+  'INSERT INTO Issues (title, description, project_id, assigned_to, added_by, priority, status) ' +
+  'VALUES ($1, $2, $3, $4, $5, $6, 1) ' +
+  'RETURNING *';

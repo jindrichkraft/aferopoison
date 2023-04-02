@@ -4,9 +4,14 @@ import { pool } from '../main';
 import {
   GET_ISSUE_BY_ID_QUERY,
   GET_ALL_ISSUES_ASSIGNED_TO_USER_QUERY,
+  CREATE_NEW_ISSUE_QUERY,
 } from '../queries/issue';
 import { authorize } from '../middlewares/auth';
-import { BAD_REQUEST_CODE, SERVER_ERROR_CODE } from '../utils/constants';
+import {
+  CREATED_CODE,
+  BAD_REQUEST_CODE,
+  SERVER_ERROR_CODE,
+} from '../utils/constants';
 
 const issueRouter = Router();
 
@@ -48,6 +53,47 @@ issueRouter.get('/:id', authorize, async (req, res) => {
       success: true,
       message: null,
       data: issue.rows[0] || null,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(SERVER_ERROR_CODE).json({
+      success: false,
+      message: 'Server error!',
+      data: null,
+    });
+  }
+});
+
+issueRouter.post('/', authorize, async (req, res) => {
+  try {
+    // Validating input data
+    const { title, description, projectId, assignedTo, priority } = req.body;
+    if (!title || !description || !projectId || !assignedTo || !priority)
+      return res.status(BAD_REQUEST_CODE).json({
+        success: false,
+        message: 'Invalid input data!',
+        data: null,
+      });
+
+    // Creating the new issue
+    const newIssue = (
+      await pool.query(CREATE_NEW_ISSUE_QUERY, [
+        title,
+        description,
+        projectId,
+        assignedTo,
+        req.user.id,
+        priority,
+      ])
+    ).rows[0];
+
+    // Sending the issue data
+    return res.status(CREATED_CODE).json({
+      success: true,
+      message: 'Successfully created a new issue!',
+      data: {
+        ...newIssue,
+      },
     });
   } catch (error) {
     console.log(error);
